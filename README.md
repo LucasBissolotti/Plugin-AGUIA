@@ -19,7 +19,7 @@ O **AGUIA** (Acessibilidade e guia para pessoas com deficiência visual) é um p
   - Timestamp da interação
 
 ## 📁 Estrutura do Projeto
-
+```
 local/aguia/
 ├── amd/
 │   ├── build/                       # Arquivos compilados (gerados, não versionar)
@@ -70,7 +70,7 @@ local/aguia/
 ├── LICENSE.txt                         # Licença
 ├── README.md                           # Documentação
 └── .gitignore                          # Ignora cache, node_modules, etc.
-
+```
 ## 🚀 Instalação
 
 1. Copie a pasta `aguia` para o diretório `[moodle_root]/local/`.
