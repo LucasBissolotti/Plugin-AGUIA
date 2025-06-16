@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB RELOAD="true" COMMENT="Instalação inicial do plugin AGUIA">
+    <TABLES>
+        <TABLE NAME="local_aguia_logs" COMMENT="Registro de uso das funcionalidades do plugin AGUIA."
+               VERSION="2025061300">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"
+                       DESCRIPTION="ID único do registro de log"/>
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0"
+                       DESCRIPTION="ID do usuário que realizou a ação"/>
+                <FIELD NAME="action" TYPE="char" LENGTH="255" NOTNULL="true"
+                       DESCRIPTION="Nome da ação realizada (ex: toggle_high_contrast)"/>
+                <FIELD NAME="value" TYPE="char" LENGTH="255" NOTNULL="false"
+                       DESCRIPTION="Valor associado à ação (ex: 'on', 'off', 'level_1')"/>
+                <FIELD NAME="pageurl" TYPE="char" LENGTH="255" NOTNULL="false"
+                       DESCRIPTION="URL da página onde a ação ocorreu"/>
+                <FIELD NAME="ipaddr" TYPE="char" LENGTH="45" NOTNULL="false"
+                       DESCRIPTION="Endereço IP do usuário (para auditoria)"/>
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0"
+                       DESCRIPTION="Timestamp da criação do registro"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+                <KEY NAME="userid_fk" TYPE="foreign" FIELDS="userid" REFERENCE="user" ONSUBMIT="SET NULL"/>
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="userid_idx" FIELDS="userid"/>
+                <INDEX NAME="action_idx" FIELDS="action"/>
+                <INDEX NAME="timecreated_idx" FIELDS="timecreated"/>
+            </INDEXES>
+        </TABLE>
+    </TABLES>
+</XMLDB>

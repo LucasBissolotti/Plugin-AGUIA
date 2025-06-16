@@ -1,0 +1,450 @@
+// Variáveis básicas
+$aguia-primary-color: #007bff; // Azul Moodle ou similar
+$aguia-text-color: #333;
+$aguia-bg-color: #f8f9fa;
+$aguia-border-color: #ddd;
+$aguia-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+$aguia-z-index: 10000; // Alto z-index para garantir que fique visível
+
+// Mixin para transições suaves
+@mixin aguia-transition($properties...) {
+    transition: $properties 0.3s ease-in-out;
+}
+
+// ----------------------------------------------------
+// 1. Contêiner Principal e Botão de Ativação
+// ----------------------------------------------------
+#aguia-accessibility-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: $aguia-z-index;
+    display: block; // Por padrão, oculto por JS na inicialização e mostrado depois
+    @include aguia-transition(transform, opacity);
+
+    &.aguia-hidden {
+        display: none; // Controlado por JS para evitar FOUC
+    }
+}
+
+.aguia-icon-button {
+    background-color: $aguia-primary-color;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: $aguia-shadow;
+    @include aguia-transition(background-color, transform);
+
+    &:hover {
+        background-color: darken($aguia-primary-color, 10%);
+        transform: scale(1.05);
+    }
+
+    img {
+        width: 30px;
+        height: 30px;
+        filter: invert(1); // Ícone branco em fundo colorido
+    }
+}
+
+// ----------------------------------------------------
+// 2. Painel de Acessibilidade (Modal/Lateral)
+// ----------------------------------------------------
+.aguia-panel {
+    position: fixed;
+    bottom: 80px; // Acima do botão de ativação
+    right: 20px;
+    width: 320px;
+    max-height: 80vh;
+    background-color: $aguia-bg-color;
+    border: 1px solid $aguia-border-color;
+    border-radius: 8px;
+    box-shadow: $aguia-shadow;
+    z-index: $aguia-z-index + 1; // Acima do botão
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; // Para lidar com o scroll do corpo
+    @include aguia-transition(opacity, transform);
+    transform: translateY(20px) scale(0.95);
+    opacity: 0;
+    pointer-events: none; // Não interage quando oculto
+
+    &.aguia-panel-visible {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        pointer-events: all;
+    }
+}
+
+.aguia-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid $aguia-border-color;
+    background-color: lighten($aguia-bg-color, 2%);
+    color: $aguia-text-color;
+
+    h2 {
+        margin: 0;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+}
+
+.aguia-close-button {
+    background: none;
+    border: none;
+    font-size: 1.8em;
+    font-weight: bold;
+    color: $aguia-text-color;
+    cursor: pointer;
+    padding: 5px 10px;
+    line-height: 1;
+    @include aguia-transition(color, transform);
+
+    &:hover {
+        color: $aguia-primary-color;
+        transform: rotate(90deg);
+    }
+}
+
+.aguia-panel-body {
+    padding: 15px;
+    overflow-y: auto; // Habilita scroll se o conteúdo for grande
+    flex-grow: 1; // Ocupa o espaço restante
+}
+
+.aguia-panel-section {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed $aguia-border-color;
+
+    &:last-child {
+        border-bottom: none; // Remove a borda do último elemento
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 1.1em;
+        color: $aguia-primary-color;
+    }
+}
+
+// ----------------------------------------------------
+// 3. Estilos dos Controles (Botões de Toggle e Fonte)
+// ----------------------------------------------------
+// Botões de Toggle (Alto Contraste, Espaçamento, Feedback Auditivo)
+.aguia-panel-section button:not(.aguia-font-controls button):not(.aguia-close-button):not(#aguia-toggle-button) {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 1em;
+    color: $aguia-text-color;
+    @include aguia-transition(background-color, border-color, box-shadow);
+
+    &:hover {
+        background-color: #e0e0e0;
+        border-color: #bbb;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    &[aria-pressed="true"] {
+        background-color: $aguia-primary-color;
+        border-color: darken($aguia-primary-color, 10%);
+        color: white;
+        box-shadow: none;
+
+        .aguia-button-text {
+            color: white;
+        }
+
+        .aguia-toggle-switch {
+            background-color: #fff; // Bola do toggle branca
+            &:before {
+                transform: translateX(20px);
+                background-color: $aguia-primary-color; // Fundo da bola
+            }
+        }
+    }
+}
+
+.aguia-button-text {
+    flex-grow: 1; // Ocupa o espaço restante
+    text-align: left;
+    color: $aguia-text-color; // Cor padrão, será sobrescrita se ativado
+    @include aguia-transition(color);
+}
+
+.aguia-toggle-switch {
+    width: 40px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+    margin-left: auto; // Alinha à direita
+    @include aguia-transition(background-color);
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 16px;
+        height: 16px;
+        background-color: #fff;
+        border-radius: 50%;
+        @include aguia-transition(transform, background-color);
+    }
+}
+
+// Controles de Fonte (A-, A+)
+.aguia-font-controls {
+    display: flex;
+    gap: 10px;
+
+    button {
+        flex: 1;
+        padding: 10px 15px;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.2em;
+        font-weight: bold;
+        color: $aguia-text-color;
+        @include aguia-transition(background-color, border-color, transform);
+
+        &:hover {
+            background-color: #e0e0e0;
+            border-color: #bbb;
+            transform: translateY(-2px);
+        }
+
+        &:active {
+            transform: translateY(0);
+            background-color: #d0d0d0;
+        }
+    }
+}
+
+// ----------------------------------------------------
+// 4. Seção de Atalhos de Teclado
+// ----------------------------------------------------
+.aguia-shortcuts-list {
+    margin-top: 10px;
+    border-top: 1px solid $aguia-border-color;
+    padding-top: 10px;
+    @include aguia-transition(max-height, opacity);
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+
+    &.aguia-visible {
+        max-height: 300px; // Altura máxima arbitrária para a transição
+        opacity: 1;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+        padding: 5px 0;
+        font-size: 0.95em;
+        color: $aguia-text-color;
+    }
+
+    kbd {
+        display: inline-block;
+        padding: 2px 4px;
+        font-size: 0.9em;
+        font-family: monospace;
+        color: #fff;
+        background-color: $aguia-primary-color;
+        border-radius: 3px;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+        margin-right: 5px;
+    }
+}
+
+// ----------------------------------------------------
+// 5. Overlay do Painel (para efeito modal)
+// ----------------------------------------------------
+.aguia-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); // Semi-transparente
+    z-index: $aguia-z-index; // Abaixo do painel, acima do conteúdo
+    display: none; // Controlado por JS
+    @include aguia-transition(opacity);
+    opacity: 0;
+
+    &.aguia-overlay-visible {
+        display: block;
+        opacity: 1;
+    }
+}
+
+// ----------------------------------------------------
+// 6. Modos de Acessibilidade (Alto Contraste, Fontes, Espaçamento)
+// Estes serão aplicados ao <body> ou <html> via JS
+// ----------------------------------------------------
+
+// Modo de Alto Contraste
+body.aguia-high-contrast {
+    background-color: black !important;
+    color: white !important;
+
+    // Sobrescreve cores de texto e fundo de vários elementos comuns
+    h1, h2, h3, h4, h5, h6,
+    p, span, div, a, li, td, th, label, input, textarea, select {
+        color: white !important;
+        background-color: black !important;
+        border-color: #888 !important; // Bordas mais visíveis
+    }
+
+    a {
+        color: yellow !important; // Links em amarelo para alto contraste
+        &:visited {
+            color: orange !important;
+        }
+    }
+
+    // Botões e inputs
+    button, input[type="button"], input[type="submit"], input[type="reset"] {
+        background-color: #333 !important;
+        color: yellow !important;
+        border: 1px solid yellow !important;
+    }
+
+    input[type="text"], input[type="password"], input[type="email"],
+    textarea, select {
+        background-color: #111 !important;
+        color: white !important;
+        border: 1px solid yellow !important;
+    }
+
+    // Elementos do Moodle que podem ter background
+    .card, .block, .course-content, .activity-item, .mod-indent-outer {
+        background-color: #222 !important;
+        color: white !important;
+        border-color: #555 !important;
+    }
+
+    // Certas imagens e ícones podem precisar de inversão ou filtro
+    img:not([src*=".svg"]):not(.aguia-icon-button img),
+    .icon { // Exemplo para ícones gerais
+        filter: invert(1) hue-rotate(180deg) !important; // Inverte cores
+    }
+
+    // Painel AGUIA no modo de alto contraste
+    .aguia-panel {
+        background-color: #222 !important;
+        border-color: yellow !important;
+        box-shadow: 0 0 10px yellow !important;
+
+        .aguia-panel-header {
+            background-color: #333 !important;
+            color: yellow !important;
+            border-bottom-color: yellow !important;
+        }
+
+        h2, h3 {
+            color: yellow !important;
+        }
+
+        .aguia-close-button {
+            color: yellow !important;
+            &:hover {
+                color: white !important;
+            }
+        }
+
+        .aguia-panel-section {
+            border-bottom-color: #555 !important;
+        }
+
+        button {
+            background-color: #444 !important;
+            border-color: yellow !important;
+            color: yellow !important;
+            .aguia-button-text {
+                color: yellow !important;
+            }
+        }
+        button[aria-pressed="true"] {
+            background-color: yellow !important;
+            color: black !important;
+            .aguia-button-text {
+                color: black !important;
+            }
+            .aguia-toggle-switch {
+                background-color: #fff !important;
+                &:before {
+                    background-color: black !important;
+                }
+            }
+        }
+        .aguia-toggle-switch {
+            background-color: #555 !important;
+            &:before {
+                background-color: yellow !important;
+            }
+        }
+
+        .aguia-font-controls button {
+            background-color: #444 !important;
+            border-color: yellow !important;
+            color: yellow !important;
+        }
+
+        kbd {
+            background-color: yellow !important;
+            color: black !important;
+        }
+    }
+}
+
+// Níveis de Tamanho de Fonte (aplicado ao body)
+body.aguia-font-level-1 {
+    font-size: 1.1em !important; // 10% maior que o padrão
+}
+body.aguia-font-level-2 {
+    font-size: 1.2em !important; // 20% maior que o padrão
+}
+// Pode expandir para mais níveis ou usar rem para melhor controle
+
+// Espaçamento de Linha Aumentado (aplicado ao body)
+body.aguia-line-height-enhanced {
+    line-height: 1.8 !important; // Mais espaçamento entre linhas
+    letter-spacing: 0.05em !important; // Leve espaçamento entre letras
+    word-spacing: 0.1em !important; // Leve espaçamento entre palavras
+
+    // Aplicar a elementos de texto específicos se necessário
+    p, li, div.content, span.text_content {
+        line-height: 1.8 !important;
+        letter-spacing: 0.05em !important;
+        word-spacing: 0.1em !important;
+    }
+}

@@ -1,0 +1,82 @@
+{{!
+    Este é o template Mustache para o Painel de Acessibilidade AGUIA.
+    Ele renderiza o ícone de ativação e a estrutura do modal/painel.
+}}
+
+<div id="aguia-accessibility-container" class="aguia-hidden">
+    {{! Botão/Ícone para abrir o painel }}
+    <button id="aguia-toggle-button" class="aguia-icon-button" aria-label="{{paneltitle}}">
+        <img src="{{iconurl}}" alt="{{paneltitle}}" />
+    </button>
+
+    {{! Painel de Acessibilidade (Modal/Lateral) }}
+    <div id="aguia-accessibility-panel" class="aguia-panel" role="dialog" aria-labelledby="aguia-panel-title">
+        <div class="aguia-panel-header">
+            <h2 id="aguia-panel-title">{{paneltitle}}</h2>
+            <button id="aguia-close-button" class="aguia-close-button" aria-label="{{panelclosetext}}">
+                &times; {{! Caractere 'X' }}
+            </button>
+        </div>
+
+        <div class="aguia-panel-body">
+            {{! Seção de Contraste }}
+            <div class="aguia-panel-section">
+                <h3>{{highcontrastmode}}</h3>
+                <button id="aguia-toggle-contrast" aria-pressed="false" aria-label="{{togglehighcontrast}}">
+                    <span class="aguia-button-text"></span>
+                    <span class="aguia-toggle-switch" role="switch" aria-checked="false"></span>
+                </button>
+            </div>
+
+            {{! Seção de Tamanho da Fonte }}
+            <div class="aguia-panel-section">
+                <h3>{{fontsize}}</h3>
+                <div class="aguia-font-controls">
+                    <button id="aguia-decrease-font" aria-label="{{decreasefonttext}}">A-</button>
+                    <button id="aguia-increase-font" aria-label="{{increasefonttext}}">A+</button>
+                </div>
+            </div>
+
+            {{! Seção de Espaçamento de Linha }}
+            <div class="aguia-panel-section">
+                <h3>{{linespacing}}</h3>
+                <button id="aguia-toggle-linespacing" aria-pressed="false" aria-label="{{togglelinespacing}}">
+                    <span class="aguia-button-text"></span>
+                    <span class="aguia-toggle-switch" role="switch" aria-checked="false"></span>
+                </button>
+            </div>
+
+            {{! Seção de Feedback Auditivo }}
+            <div class="aguia-panel-section">
+                <h3>{{auditoryfeedback}}</h3>
+                <button id="aguia-toggle-auditory-feedback" aria-pressed="false" aria-label="{{toggleauditoryfeedback}}">
+                    <span class="aguia-button-text"></span>
+                    <span class="aguia-toggle-switch" role="switch" aria-checked="false"></span>
+                </button>
+            </div>
+
+            {{! Seção de Atalhos de Teclado (Pode ser um link para um modal separado ou expandir aqui) }}
+            <div class="aguia-panel-section">
+                <h3>{{keyboardshortcuts}}</h3>
+                <button id="aguia-view-shortcuts" aria-expanded="false" aria-controls="aguia-shortcuts-list" aria-label="{{viewshortcutstext}}">
+                    {{viewshortcutstext}}
+                </button>
+                <div id="aguia-shortcuts-list" class="aguia-shortcuts-list aguia-hidden" role="region">
+                    {{! Conteúdo dos atalhos será preenchido via JS ou outro template se for complexo }}
+                    <ul>
+                        <li><kbd>Ctrl + Alt + A</kbd>: {{paneltitle}} (Abrir/Fechar)</li>
+                        <li><kbd>Ctrl + Alt + T</kbd>: {{togglehighcontrast}}</li>
+                        <li><kbd>Ctrl + Alt + I</kbd>: {{increasefontsize}}</li>
+                        <li><kbd>Ctrl + Alt + D</kbd>: {{decreasefontsize}}</li>
+                        <li><kbd>Ctrl + Alt + S</kbd>: {{togglelinespacing}}</li>
+                        <li><kbd>Ctrl + Alt + V</kbd>: {{toggleauditoryfeedback}}</li>
+                        <li><kbd>Ctrl + Alt + N</kbd>: Próximo Elemento Navegável</li>
+                        <li><kbd>Ctrl + Alt + P</kbd>: Elemento Navegável Anterior</li>
+                        {{! ... mais atalhos aqui ... }}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="aguia-overlay" class="aguia-overlay aguia-hidden"></div> {{! Overlay para o modal }}
+</div>
