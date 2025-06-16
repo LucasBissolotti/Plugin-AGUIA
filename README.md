@@ -22,28 +22,54 @@ O **AGUIA** (Acessibilidade e guia para pessoas com deficiência visual) é um p
 
 local/aguia/
 ├── amd/
-│ └── src/
-│ └── main.js # Funcionalidades JavaScript (AMD).
+│   ├── build/                       # Arquivos compilados (gerados, não versionar)
+│   └── src/                          # Código fonte JS
+│       ├── main.js                   # JS principal
+│       └── utils.js                  # Funções utilitárias, se necessário
+│
 ├── classes/
-│ ├── aguia_accessibility_manager.php # Gerenciador de acessibilidade.
-│ └── output/
-│ └── renderer.php # Renderer personalizado (opcional).
+│   ├── event/                        # Eventos do Moodle (ex.: log personalizado)
+│   │   └── accessibility_action_logged.php
+│   ├── form/                         # Formulários customizados (se houver)
+│   ├── output/                        # Renderers e templates PHP
+│   │   └── renderer.php
+│   ├── service/                       # Lógica de serviços (ex.: log, manipulação de dados)
+│   │   └── accessibility_logger.php
+│   └── manager/                       # Classes de gerenciamento
+│       └── accessibility_manager.php
+│
 ├── db/
-│ ├── install.xml # Definição do banco de dados.
-│ └── upgrade.php # Script de atualização (em desenvolvimento).
+│   ├── access.php                     # Permissões e capabilities
+│   ├── events.php                     # Declaração dos eventos
+│   ├── install.xml                    # Definição do banco de dados
+│   ├── upgrade.php                    # Atualização do banco de dados
+│   └── services.php                   # Web services (se usar API externa)
+│
 ├── lang/
-│ ├── en/local_aguia.php # Tradução em inglês.
-│ └── pt_br/local_aguia.php # Tradução em português do Brasil.
-├── pix/ # Ícones e imagens.
-├── scss/
-│ └── aguia_styles.scss # Estilos SCSS personalizados.
-├── templates/
-│ └── aguia_panel_icon.mustache # Template Mustache para o painel/ícone.
-├── ajax_log.php # Endpoint AJAX para registro de logs.
-├── lib.php # Funções e hooks do plugin.
-├── settings.php # Configurações administrativas do plugin.
-└── version.php # Versão e compatibilidade.
-
+│   ├── en/                            # Idioma inglês
+│   │   └── local_aguia.php
+│   └── pt_br/                         # Idioma português (Brasil)
+│       └── local_aguia.php
+│
+├── pix/                               # Ícones e imagens
+│   └── icon.png
+│
+├── scss/                              # Estilos (SCSS moderno)
+│   └── aguia.scss
+│
+├── templates/                         # Templates Mustache (HTML server-side)
+│   ├── panel.mustache                 # Painel principal de acessibilidade
+│   └── button.mustache                # Botões ou elementos do UI
+│
+├── ajax/                              # Endpoints AJAX (modularizado)
+│   └── log_action.php                 # Recebe requisições de log
+│
+├── lib.php                             # Hooks do Moodle (core API)
+├── settings.php                        # Página de configuração no admin
+├── version.php                         # Metadados do plugin
+├── LICENSE.txt                         # Licença
+├── README.md                           # Documentação
+└── .gitignore                          # Ignora cache, node_modules, etc.
 
 ## 🚀 Instalação
 
