@@ -111,4 +111,3 @@ php admin/cli/purge_caches.php
 📄 Licença
 
 Distribuído sob a GNU General Public License v3 ou posterior.
-Consulte o arquivo LICENSE.txt para mais informações.
