@@ -89,7 +89,6 @@ local/aguia/
 ## 🧑‍💻 Desenvolvimento e Contribuição
 
 - Status: **Em desenvolvimento (Alpha)**
-- Contribuições são bem-vindas! Sinta-se livre para abrir issues ou pull requests.
 
 ## 📜 Requisitos
 
