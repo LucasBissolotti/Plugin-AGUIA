@@ -1,33 +1,41 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB RELOAD="true" COMMENT="Instalação inicial do plugin AGUIA">
+<?xml version="1.0" encoding="UTF-8"?>
+<XMLDB PATH="local\aguia\db" RELOAD="true" VERSION="2025061300"
+    COMMENT="Instalacao inicial do plugin AGUIA">
     <TABLES>
-        <TABLE NAME="local_aguia_logs" COMMENT="Registro de uso das funcionalidades do plugin AGUIA."
-               VERSION="2025061300">
+        <TABLE NAME="local_aguia_logs"
+            COMMENT="Registro de uso das funcionalidades do plugin AGUIA." VERSION="2025061300">
             <FIELDS>
-                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"
-                       DESCRIPTION="ID único do registro de log"/>
-                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0"
-                       DESCRIPTION="ID do usuário que realizou a ação"/>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true"
+                    SEQUENCE="true" DESCRIPTION="ID unico do registro de log" VERSION="2025061300" />
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true"
+                    DEFAULT="0" DESCRIPTION="ID do usuario que realizou a acao" VERSION="2025061300" />
                 <FIELD NAME="action" TYPE="char" LENGTH="255" NOTNULL="true"
-                       DESCRIPTION="Nome da ação realizada (ex: toggle_high_contrast)"/>
+                    DESCRIPTION="Nome da acao realizada (ex: toggle_high_contrast)"
+                    VERSION="2025061300" />
                 <FIELD NAME="value" TYPE="char" LENGTH="255" NOTNULL="false"
-                       DESCRIPTION="Valor associado à ação (ex: 'on', 'off', 'level_1')"/>
+                    DESCRIPTION="Valor associado a acao (ex: 'on', 'off', 'level_1')"
+                    VERSION="2025061300" />
                 <FIELD NAME="pageurl" TYPE="char" LENGTH="255" NOTNULL="false"
-                       DESCRIPTION="URL da página onde a ação ocorreu"/>
+                    DESCRIPTION="URL da pagina onde a acao ocorreu" VERSION="2025061300" />
                 <FIELD NAME="ipaddr" TYPE="char" LENGTH="45" NOTNULL="false"
-                       DESCRIPTION="Endereço IP do usuário (para auditoria)"/>
-                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0"
-                       DESCRIPTION="Timestamp da criação do registro"/>
+                    DESCRIPTION="Endereco IP do usuario (para auditoria)" VERSION="2025061300" />
+                <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true"
+                    DEFAULT="0" DESCRIPTION="Timestamp da criacao do registro" VERSION="2025061300" />
             </FIELDS>
             <KEYS>
-                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-                <KEY NAME="userid_fk" TYPE="foreign" FIELDS="userid" REFERENCE="user" ONSUBMIT="SET NULL"/>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+                <KEY NAME="userid_fk" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"
+                    ONDELETE="SET NULL" />
             </KEYS>
+
+
             <INDEXES>
-                <INDEX NAME="userid_idx" FIELDS="userid"/>
-                <INDEX NAME="action_idx" FIELDS="action"/>
-                <INDEX NAME="timecreated_idx" FIELDS="timecreated"/>
+                <INDEX NAME="userid_idx" FIELDS="userid" UNIQUE="false" VERSION="2025061300" />
+                <INDEX NAME="action_idx" FIELDS="action" UNIQUE="false" VERSION="2025061300" />
+                <INDEX NAME="timecreated_idx" FIELDS="timecreated" UNIQUE="false"
+                    VERSION="2025061300" />
             </INDEXES>
+
         </TABLE>
     </TABLES>
 </XMLDB>
