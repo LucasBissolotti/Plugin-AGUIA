@@ -1,0 +1,372 @@
+#aguia-accessibility-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10000;
+  display: block;
+  transition: transform, opacity 0.3s ease-in-out;
+}
+#aguia-accessibility-container.aguia-hidden {
+  display: none;
+}
+
+.aguia-icon-button {
+  background-color: #007bff;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color, transform 0.3s ease-in-out;
+}
+.aguia-icon-button:hover {
+  background-color: rgb(0, 98.4, 204);
+  transform: scale(1.05);
+}
+.aguia-icon-button img {
+  width: 30px;
+  height: 30px;
+  filter: invert(1);
+}
+
+.aguia-panel {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 320px;
+  max-height: 80vh;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10001;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: opacity, transform 0.3s ease-in-out;
+  transform: translateY(20px) scale(0.95);
+  opacity: 0;
+  pointer-events: none;
+}
+.aguia-panel.aguia-panel-visible {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.aguia-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+  background-color: rgb(253.95, 254.1, 254.25);
+  color: #333;
+}
+.aguia-panel-header h2 {
+  margin: 0;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.aguia-close-button {
+  background: none;
+  border: none;
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  padding: 5px 10px;
+  line-height: 1;
+  transition: color, transform 0.3s ease-in-out;
+}
+.aguia-close-button:hover {
+  color: #007bff;
+  transform: rotate(90deg);
+}
+
+.aguia-panel-body {
+  padding: 15px;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.aguia-panel-section {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px dashed #ddd;
+}
+.aguia-panel-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.aguia-panel-section h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.1em;
+  color: #007bff;
+}
+
+.aguia-panel-section button:not(.aguia-font-controls button):not(.aguia-close-button):not(#aguia-toggle-button) {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 15px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: left;
+  font-size: 1em;
+  color: #333;
+  transition: background-color, border-color, box-shadow 0.3s ease-in-out;
+}
+.aguia-panel-section button:not(.aguia-font-controls button):not(.aguia-close-button):not(#aguia-toggle-button):hover {
+  background-color: #e0e0e0;
+  border-color: #bbb;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.aguia-panel-section button:not(.aguia-font-controls button):not(.aguia-close-button):not(#aguia-toggle-button)[aria-pressed=true] {
+  background-color: #007bff;
+  border-color: rgb(0, 98.4, 204);
+  color: white;
+  box-shadow: none;
+}
+.aguia-panel-section button:not(.aguia-font-controls button):not(.aguia-close-button):not(#aguia-toggle-button)[aria-pressed=true] .aguia-button-text {
+  color: white;
+}
+.aguia-panel-section button:not(.aguia-font-controls button):not(.aguia-close-button):not(#aguia-toggle-button)[aria-pressed=true] .aguia-toggle-switch {
+  background-color: #fff;
+}
+.aguia-panel-section button:not(.aguia-font-controls button):not(.aguia-close-button):not(#aguia-toggle-button)[aria-pressed=true] .aguia-toggle-switch:before {
+  transform: translateX(20px);
+  background-color: #007bff;
+}
+
+.aguia-button-text {
+  flex-grow: 1;
+  text-align: left;
+  color: #333;
+  transition: color 0.3s ease-in-out;
+}
+
+.aguia-toggle-switch {
+  width: 40px;
+  height: 20px;
+  background-color: #ccc;
+  border-radius: 10px;
+  position: relative;
+  cursor: pointer;
+  margin-left: auto;
+  transition: background-color 0.3s ease-in-out;
+}
+.aguia-toggle-switch:before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: transform, background-color 0.3s ease-in-out;
+}
+
+.aguia-font-controls {
+  display: flex;
+  gap: 10px;
+}
+.aguia-font-controls button {
+  flex: 1;
+  padding: 10px 15px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+  transition: background-color, border-color, transform 0.3s ease-in-out;
+}
+.aguia-font-controls button:hover {
+  background-color: #e0e0e0;
+  border-color: #bbb;
+  transform: translateY(-2px);
+}
+.aguia-font-controls button:active {
+  transform: translateY(0);
+  background-color: #d0d0d0;
+}
+
+.aguia-shortcuts-list {
+  margin-top: 10px;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+  transition: max-height, opacity 0.3s ease-in-out;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+}
+.aguia-shortcuts-list.aguia-visible {
+  max-height: 300px;
+  opacity: 1;
+}
+.aguia-shortcuts-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.aguia-shortcuts-list li {
+  padding: 5px 0;
+  font-size: 0.95em;
+  color: #333;
+}
+.aguia-shortcuts-list kbd {
+  display: inline-block;
+  padding: 2px 4px;
+  font-size: 0.9em;
+  font-family: monospace;
+  color: #fff;
+  background-color: #007bff;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  margin-right: 5px;
+}
+
+.aguia-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10000;
+  display: none;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0;
+}
+.aguia-overlay.aguia-overlay-visible {
+  display: block;
+  opacity: 1;
+}
+
+body.aguia-high-contrast {
+  background-color: black !important;
+  color: white !important;
+}
+body.aguia-high-contrast h1, body.aguia-high-contrast h2, body.aguia-high-contrast h3, body.aguia-high-contrast h4, body.aguia-high-contrast h5, body.aguia-high-contrast h6,
+body.aguia-high-contrast p, body.aguia-high-contrast span, body.aguia-high-contrast div, body.aguia-high-contrast a, body.aguia-high-contrast li, body.aguia-high-contrast td, body.aguia-high-contrast th, body.aguia-high-contrast label, body.aguia-high-contrast input, body.aguia-high-contrast textarea, body.aguia-high-contrast select {
+  color: white !important;
+  background-color: black !important;
+  border-color: #888 !important;
+}
+body.aguia-high-contrast a {
+  color: yellow !important;
+}
+body.aguia-high-contrast a:visited {
+  color: orange !important;
+}
+body.aguia-high-contrast button, body.aguia-high-contrast input[type=button], body.aguia-high-contrast input[type=submit], body.aguia-high-contrast input[type=reset] {
+  background-color: #333 !important;
+  color: yellow !important;
+  border: 1px solid yellow !important;
+}
+body.aguia-high-contrast input[type=text], body.aguia-high-contrast input[type=password], body.aguia-high-contrast input[type=email],
+body.aguia-high-contrast textarea, body.aguia-high-contrast select {
+  background-color: #111 !important;
+  color: white !important;
+  border: 1px solid yellow !important;
+}
+body.aguia-high-contrast .card, body.aguia-high-contrast .block, body.aguia-high-contrast .course-content, body.aguia-high-contrast .activity-item, body.aguia-high-contrast .mod-indent-outer {
+  background-color: #222 !important;
+  color: white !important;
+  border-color: #555 !important;
+}
+body.aguia-high-contrast img:not([src*=".svg"]):not(.aguia-icon-button img),
+body.aguia-high-contrast .icon {
+  filter: invert(1) hue-rotate(180deg) !important;
+}
+body.aguia-high-contrast .aguia-panel {
+  background-color: #222 !important;
+  border-color: yellow !important;
+  box-shadow: 0 0 10px yellow !important;
+}
+body.aguia-high-contrast .aguia-panel .aguia-panel-header {
+  background-color: #333 !important;
+  color: yellow !important;
+  border-bottom-color: yellow !important;
+}
+body.aguia-high-contrast .aguia-panel h2, body.aguia-high-contrast .aguia-panel h3 {
+  color: yellow !important;
+}
+body.aguia-high-contrast .aguia-panel .aguia-close-button {
+  color: yellow !important;
+}
+body.aguia-high-contrast .aguia-panel .aguia-close-button:hover {
+  color: white !important;
+}
+body.aguia-high-contrast .aguia-panel .aguia-panel-section {
+  border-bottom-color: #555 !important;
+}
+body.aguia-high-contrast .aguia-panel button {
+  background-color: #444 !important;
+  border-color: yellow !important;
+  color: yellow !important;
+}
+body.aguia-high-contrast .aguia-panel button .aguia-button-text {
+  color: yellow !important;
+}
+body.aguia-high-contrast .aguia-panel button[aria-pressed=true] {
+  background-color: yellow !important;
+  color: black !important;
+}
+body.aguia-high-contrast .aguia-panel button[aria-pressed=true] .aguia-button-text {
+  color: black !important;
+}
+body.aguia-high-contrast .aguia-panel button[aria-pressed=true] .aguia-toggle-switch {
+  background-color: #fff !important;
+}
+body.aguia-high-contrast .aguia-panel button[aria-pressed=true] .aguia-toggle-switch:before {
+  background-color: black !important;
+}
+body.aguia-high-contrast .aguia-panel .aguia-toggle-switch {
+  background-color: #555 !important;
+}
+body.aguia-high-contrast .aguia-panel .aguia-toggle-switch:before {
+  background-color: yellow !important;
+}
+body.aguia-high-contrast .aguia-panel .aguia-font-controls button {
+  background-color: #444 !important;
+  border-color: yellow !important;
+  color: yellow !important;
+}
+body.aguia-high-contrast .aguia-panel kbd {
+  background-color: yellow !important;
+  color: black !important;
+}
+
+body.aguia-font-level-1 {
+  font-size: 1.1em !important;
+}
+
+body.aguia-font-level-2 {
+  font-size: 1.2em !important;
+}
+
+body.aguia-line-height-enhanced {
+  line-height: 1.8 !important;
+  letter-spacing: 0.05em !important;
+  word-spacing: 0.1em !important;
+}
+body.aguia-line-height-enhanced p, body.aguia-line-height-enhanced li, body.aguia-line-height-enhanced div.content, body.aguia-line-height-enhanced span.text_content {
+  line-height: 1.8 !important;
+  letter-spacing: 0.05em !important;
+  word-spacing: 0.1em !important;
+}
+
+/*# sourceMappingURL=aguia_styles.css.map */

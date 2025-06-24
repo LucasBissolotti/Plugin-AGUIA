@@ -16,8 +16,23 @@ require_once(__DIR__ . '/classes/aguia_accessibility_manager.php'); // Inclui o 
  * @return void
  */
 function local_aguia_before_footer() {
-    \local_aguia\aguia_accessibility_manager::inject_resources();
+    global $PAGE, $OUTPUT;
+
+    if (!get_config('local_aguia', 'enableplugin')) {
+        return;
+    }
+
+    // Injeta JS do plugin
+    $PAGE->requires->js_call_amd('local_aguia/aguia_main', 'init', [], [
+        'waitfor: jquery',
+        'async' => true
+    ]);
+
+    // Injeta o painel AGUIA no rodapé
+    $html = \local_aguia\aguia_accessibility_manager::render_aguia_panel_icon($OUTPUT);
+    echo $html;
 }
+
 
 /**
  * Função para retornar um HTML personalizado para um ícone/botão do AGUIA,
@@ -41,4 +56,14 @@ function local_aguia_add_icon_to_footer(\core_output_renderer $output) {
 
     // Renderiza o painel AGUIA. O CSS posicionará ele.
     return \local_aguia\aguia_accessibility_manager::render_aguia_panel_icon($output);
+}
+
+function local_aguia_before_standard_html_head() {
+    global $PAGE;
+
+    if (!get_config('local_aguia', 'enableplugin')) {
+        return;
+    }
+
+    $PAGE->requires->css('/local/aguia/scss/aguia_styles.css');
 }

@@ -32,9 +32,6 @@ class aguia_accessibility_manager {
             'async' => true // Carregamento assíncrono para não bloquear o render
         ]);
 
-        // Adiciona o arquivo CSS principal do AGUIA.
-        $PAGE->requires->css('/local/aguia/css/aguia_styles.css');
-
         // Adiciona o ícone do painel de acessibilidade na barra de navegação/rodapé
         // Isso pode ser feito via um renderer ou um hook específico.
         // Por enquanto, vamos adicionar um HTML simples via um evento ou render_base.
