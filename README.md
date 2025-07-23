@@ -18,10 +18,6 @@ O plugin AGUIA (Acessibilidade e guia para pessoas com deficiência visual) é u
 - **Foco visível (WCAG 2.4.7)**: Destaca claramente os elementos com foco durante a navegação por teclado.
 - **Persistência de configurações**: Todas as preferências do usuário são salvas no banco de dados e restauradas automaticamente quando o usuário faz login novamente.
 
-## Screenshots
-
-*(Aqui você pode incluir 2-3 screenshots mostrando o plugin em ação: botão flutuante, menu de opções e exemplo de alguma configuração aplicada)*
-
 ## Compatibilidade
 
 - Moodle 4.1+ (versão 2022112800 ou superior)
